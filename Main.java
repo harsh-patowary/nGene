@@ -42,6 +42,52 @@ public class Main {
         }
         return encryptedString;
     }
+    
+    static public String decrypt(String str){
+        String line = "";
+
+        String decryptedString = "";
+        List<String> stringCodes = new ArrayList<>();
+        HashMap<String, String> charMap = new HashMap<>();
+        char[] chArr;
+        try {
+            //parsing a CSV file into BufferedReader class constructor
+            BufferedReader br = new BufferedReader(new FileReader("key.csv"));
+            while ((line = br.readLine()) != null) {
+                String[] data = line.split(",");
+                charMap.put(data[0], data[1]);
+            }
+
+            //Getting encrypted values to List
+            for(int i = 0; i < str.length()-1;i+=2){
+                char c1, c2;
+                String s2;
+                c1 = str.charAt(i);
+                if((c1=='c') || (c1=='d')) {
+                    s2 = str.substring(i+1, i+4);
+                    String f = c1 + s2;
+                    stringCodes.add(f);
+                    i+=2;
+                }
+                else {
+                    c2 = str.charAt(i + 1);
+                    String f = c1 + String.valueOf(c2);
+                    stringCodes.add(f);
+                }
+            }
+
+            for(int i = 0; i < stringCodes.size();i++){
+                String ss = stringCodes.get(i);
+                String F = getKey(charMap, ss);
+                decryptedString += F;
+            }
+
+        }
+        catch (Exception e) {
+                e.printStackTrace();
+            }
+        return decryptedString;
+    }
 
     public static void main(String[] args) {
         Scanner _in = new Scanner(System.in);
@@ -58,5 +104,7 @@ public class Main {
             default:
                 System.out.println("Something went wrong");
         }
+        System.out.println("decrypted Message: ");
+        System.out.println(decrypt(FINAL_STRING));
     }
 }
