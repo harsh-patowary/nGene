@@ -10,6 +10,16 @@ public class Main {
         f_str = str;
         return f_str;
     }
+    
+    public static String getKey(Map<String, String> map, String value) {
+        for (Map.Entry<String, String> entry: map.entrySet()) {
+            if (value.equals(entry.getValue())) {
+                return entry.getKey();
+            }
+        }
+        return null;
+    }
+    
 
     static public String encrypt(Object ob){
         String line = "";
