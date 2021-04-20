@@ -1,2 +1,3 @@
 # nGene
-A next Gen encryption software 
+A next Gen encryption algorithm
+in progress....
